@@ -9,14 +9,16 @@ const bootcamp = require('./routes/bootcamp')
 dotenv.config({ path: './config/config.env' })
 const app = express()
 
+// Body parser
+app.use(express.json())
+
 // Connect to database
+connectDB()
 
 // Logging middleware - Dev
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
-
-connectDB()
 
 // Mount routers
 app.use('/api/v1/bootcamp/', bootcamp)
