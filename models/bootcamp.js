@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify')
 
 const BootcampScheme = new mongoose.Schema({
     name: {
@@ -108,4 +109,9 @@ const BootcampScheme = new mongoose.Schema({
 
   })
 
-module.exports = mongoose.model('bootcamp', BootcampScheme);
+BootcampScheme.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true })
+  next()
+})
+
+module.exports = mongoose.model('bootcamp', BootcampScheme)
